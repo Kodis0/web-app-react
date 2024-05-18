@@ -9,15 +9,17 @@ function App() {
     const formData = new FormData(event.target); // Создаем объект FormData для сбора данных из формы
     const country = formData.get('country'); // Получаем значение поля "country"
     const phoneNumber = formData.get('phoneNumber'); // Получаем значение поля "phoneNumber"
+    const password = formData.get('password'); // Получаем значение поля "password"
 
     // Создаем объект с данными для отправки на сервер
     const data = new URLSearchParams();
     data.append('country', country);
     data.append('phoneNumber', phoneNumber);
+    data.append('password', password);
 
     // Отправляем данные на сервер
     try {
-      const response = await fetch('https://localhost:7187/api/your-endpoint', {
+      const response = await fetch('https://localhost:7270/api/your-endpoint', {
         method: 'POST',
         body: data // Отправляем данные в формате application/x-www-form-urlencoded
       });
@@ -46,12 +48,16 @@ function App() {
         {/* Форма с обработчиком события onSubmit */}
         <form onSubmit={handleSubmit}>
           <div className="mb-1">
-             <label for="exampleInputEmail1" class="text-field__label"><p>Country</p></label>
+            <label htmlFor="country" className="text-field__label"><p>Country</p></label>
             <input type="text" className="text-field__input" name="country" placeholder="Russian Federation" id="country" aria-describedby="countrydes"/>
           </div>
           <div className="mb-2">
             <label htmlFor="phoneNumber" className="text-field__label"><p>Your phone number</p></label>
             <input type="tel" className="text-field__input" name="phoneNumber" placeholder="Your phone number" id="phoneNumber" />
+          </div>
+          <div className="mb-2">
+            <label htmlFor="password" className="text-field__label"><p>Password</p></label>
+            <input type="password" className="text-field__input" name="password" placeholder="Your password" id="password" />
           </div>
           <div className="mb-3-form-check">
             <input type="checkbox" className="form-check-input" id="exampleCheck1" />

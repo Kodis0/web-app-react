@@ -44,7 +44,9 @@ function App() {
         <div className='h1'>
           <h1>Monogram</h1>
         </div>
-        <text className='ConfirmText'>Please select your country and enter your number</text>
+        <div className='Confirm'>
+          <text className='ConfirmText'>Please select your country and enter your number</text>
+        </div>
         {/* Форма с обработчиком события onSubmit */}
         <form onSubmit={handleSubmit}>
           <div className="mb-1">

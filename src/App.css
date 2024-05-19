@@ -16,7 +16,7 @@ body {
 }
 
 /* Input styles */
-input[type="text"] {
+input[type="text"], input[type="tel"], input[type="password"] {
   font-family: inherit;
   font-size: inherit;
   line-height: inherit;
@@ -29,6 +29,7 @@ input[type="text"] {
   pointer-events: none;
   margin: 100px auto 0;
   display: block;
+  animation: App-logo-spin infinite 20s linear;
 }
 
 /* Text field styles */
@@ -62,7 +63,6 @@ input[type="text"] {
   border-color: #6549ff;
   box-shadow: 0 0 1px rgb(101, 73, 212);
 }
-
 
 .text-field__input::placeholder {
   color: #a1a1a1;

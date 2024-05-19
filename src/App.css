@@ -69,9 +69,6 @@ input[type="text"] {
   opacity: 0.4;
 }
 
-
-
-
 /* Confirmation message styles */
 .Confirm {
   max-width: 360px;
@@ -126,6 +123,7 @@ select:focus {
   border-color: #6549ff;
   box-shadow: 0 0 1px rgb(101, 73, 212);
 }
+
 
 /* Animation styles */
 @keyframes App-logo-spin {

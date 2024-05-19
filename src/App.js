@@ -52,6 +52,8 @@ function App() {
 
     setSuccessMessage('Form submitted successfully!');
   };
+
+  
   
 
   return (
@@ -82,10 +84,6 @@ function App() {
           <div className="mb-2">
             <label htmlFor="password" className="text-field__label"></label>
             <input type="password" className="text-field__input" name="password" placeholder="Your password" id="password" />
-          </div>
-          <div className="mb-3-form-check">
-            <input type="checkbox" className="form-check-input" id="exampleCheck1" />
-            <label className="form-check-label" htmlFor="exampleCheck1">Keep me signed in</label>
           </div>
           <button type="submit" className="btn-primary">Submit</button>
         </form>

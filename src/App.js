@@ -7,29 +7,19 @@ import { validateForm } from './FormValidation';
 function App() {
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
-  const [selectedCountry, setSelectedCountry] = useState('');
+  const [selectedCountry, setSelectedCountry] = useState('Russia'); // Устанавливаем Россию по умолчанию
   const [phoneCode, setPhoneCode] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
 
   useEffect(() => {
-    populateCountrySelect();
+    handleCountryChange({target: {value: 'RU'}}); // Установка кода страны и телефонного кода для России
   }, []);
-
-  const populateCountrySelect = () => {
-    const countrySelect = document.getElementById('country');
-    countries.forEach(country => {
-      const option = document.createElement('option');
-      option.value = country.code;
-      option.text = country.name;
-      countrySelect.appendChild(option);
-    });
-  };
 
   const handleCountryChange = (event) => {
     const selectedCountryCode = event.target.value;
     const selectedCountry = countries.find(country => country.code === selectedCountryCode);
     if (selectedCountry) {
-      setSelectedCountry(selectedCountry.name);
+      setSelectedCountry(selectedCountry);
       setPhoneCode(selectedCountry.phoneCode);
     }
   };
@@ -79,8 +69,10 @@ function App() {
         <form onSubmit={handleSubmit}>
           <div className="mb-1">
             <label htmlFor="country" className="text-field__label"></label>
-            <select name="country" id="country" className="text-field__input" onChange={handleCountryChange}>
-              <option value="" disabled></option>
+            <select name="country" id="country" className="text-field__input" onChange={handleCountryChange} value={selectedCountry.code}>
+              {countries.map(country => (
+                <option key={country.code} value={country.code}>{country.name}</option>
+              ))}
             </select>
           </div>
           <div className="mb-2">

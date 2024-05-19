@@ -38,6 +38,7 @@ input[type="text"] {
   color: #aaaaaa;
 }
 
+/* Text field styles */
 .text-field__input {
   max-width: 360px;
   margin: 5px auto;
@@ -56,10 +57,12 @@ input[type="text"] {
   transition: border-color 0.15s ease-in-out, box-shadow 0.15s ease-in-out;
 }
 
-.text-field__input:hover {
-  border-color: #6549ff; /* Changed to lowercase for consistency */
+.text-field__input:hover,
+.text-field__input:focus {
+  border-color: #6549ff;
   box-shadow: 0 0 1px rgb(101, 73, 212);
 }
+
 
 .text-field__input::placeholder {
   color: #a1a1a1;

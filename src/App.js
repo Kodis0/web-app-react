@@ -85,7 +85,9 @@ function App() {
             <label htmlFor="password" className="text-field__label"></label>
             <input type="password" className="text-field__input" name="password" placeholder="Your password" id="password" />
           </div>
-          <button type="submit" className="btn-primary">Submit</button>
+          <div className='SubmitButton'>
+            <button type="submit" className="btn-primary">Submit</button>
+          </div>
         </form>
       </header>
     </div>

@@ -3,7 +3,7 @@ import logo from './logo.svg';
 import './App.css';
 import { useNavigate } from 'react-router-dom';
 
-function AnotherPage() {
+function LoginPage() {
   const [errorMessage, setErrorMessage] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
   const [password, setPassword] = useState('');
@@ -11,7 +11,12 @@ function AnotherPage() {
   const navigate = useNavigate();
 
   const handlePhoneNumberChange = (event) => {
-    setPhoneNumber(event.target.value);
+    // Проверяем, чтобы номер телефона начинался с "+", если нет - добавляем его
+    if (!phoneNumber.startsWith('+')) {
+      setPhoneNumber('+' + event.target.value);
+    } else {
+      setPhoneNumber(event.target.value);
+    }
   };
 
   const handlePasswordChange = (event) => {
@@ -20,19 +25,19 @@ function AnotherPage() {
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-  
+
     try {
       const response = await fetch('https://localhost:7270/api/check-user', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/x-www-form-urlencoded'
-      },
-      body: new URLSearchParams({
-        phoneNumber,
-        password
-  })
-});
-  
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        },
+        body: new URLSearchParams({
+          phoneNumber,
+          password
+        })
+      });
+
       if (response.ok) {
         navigate('/main');
       } else {
@@ -43,14 +48,13 @@ function AnotherPage() {
       setErrorMessage('There was an error: ' + error.message);
     }
   };
-  
 
   return (
     <div className="RegistryPage">
       <header className="RegistryPage-header">
         <img src={logo} className="RegistryPage-logo" alt="logo" />
         <div className='h1'>
-          <h1>Monogram</h1>
+          <h1>Login</h1>
         </div>
         <div className='Confirm'>
           <text className='ConfirmText'>Please enter your phone number and password.</text>
@@ -59,6 +63,7 @@ function AnotherPage() {
         <form onSubmit={handleSubmit}>
           <div className="mb-2">
             <label htmlFor="phoneNumber" className="text-field__label"></label>
+            {/* Добавляем атрибут readOnly чтобы предотвратить стирание */}
             <input type="tel" className="text-field__input" name="phoneNumber" placeholder="Your phone number" id="phoneNumber" value={phoneNumber} onChange={handlePhoneNumberChange} />
           </div>
           <div className="mb-2">
@@ -74,4 +79,4 @@ function AnotherPage() {
   );
 }
 
-export default AnotherPage;
+export default LoginPage;

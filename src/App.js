@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import logo from './logo.svg';
 import './App.css';
 import countries from './Countries';
@@ -7,28 +8,29 @@ import { validateForm } from './FormValidation';
 function App() {
   const [errorMessage, setErrorMessage] = useState('');
   const [successMessage, setSuccessMessage] = useState('');
-  const [selectedCountry, setSelectedCountry] = useState('Russia'); // Устанавливаем Россию по умолчанию
+  const [selectedCountryCode, setSelectedCountryCode] = useState('RU');
   const [phoneCode, setPhoneCode] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
+  
+  const navigate = useNavigate();
 
   useEffect(() => {
-    handleCountryChange({target: {value: 'RU'}}); // Установка кода страны и телефонного кода для России
+    handleCountryChange({ target: { value: 'RU' } });
   }, []);
 
   const handleCountryChange = (event) => {
     const selectedCountryCode = event.target.value;
     const selectedCountry = countries.find(country => country.code === selectedCountryCode);
     if (selectedCountry) {
-      setSelectedCountry(selectedCountry);
+      setSelectedCountryCode(selectedCountryCode);
       setPhoneCode(selectedCountry.phoneCode);
     }
   };
 
   const handlePhoneNumberChange = (event) => {
     const { value } = event.target;
-    // Проверяем, начинается ли введенный номер с кода страны, если да, то убираем его из введенного номера
     if (value.startsWith(phoneCode)) {
-      setPhoneNumber(value.substring(phoneCode.length)); // Убираем код страны из номера
+      setPhoneNumber(value.substring(phoneCode.length));
     } else {
       setPhoneNumber(value);
     }
@@ -37,6 +39,7 @@ function App() {
   const handleSubmit = async (event) => {
     event.preventDefault();
 
+    const selectedCountry = countries.find(country => country.code === selectedCountryCode);
     const errors = validateForm(selectedCountry, phoneNumber, event.target.password.value);
     if (errors.length > 0) {
       setErrorMessage(errors.join(' '));
@@ -45,16 +48,30 @@ function App() {
     }
 
     const data = new URLSearchParams();
-    data.append('country', selectedCountry);
-    data.append('phoneNumber', phoneCode + phoneNumber); // Добавляем код страны к номеру телефона
+    data.append('country', selectedCountryCode);
+    data.append('phoneNumber', phoneCode + phoneNumber);
     data.append('password', event.target.password.value);
-    // Здесь вы можете отправить данные на сервер или выполнить другие действия с ними
 
-    setSuccessMessage('Form submitted successfully!');
+    try {
+      const response = await fetch('https://localhost:7270/api/your-endpoint', {
+        method: 'POST',
+        body: data
+      });
+
+      const responseData = await response.json().catch(() => ({})); // Если тело пустое, вернем пустой объект
+      if (!response.ok || responseData.message === 'Phone number already exists') {
+        setErrorMessage(responseData.message || 'There was an error');
+        setSuccessMessage('');
+      } else {
+        setSuccessMessage('Data sent successfully.');
+        setErrorMessage('');
+        navigate('/another-page');
+      }
+    } catch (error) {
+      setErrorMessage('There was an error sending data: ' + error.message);
+      setSuccessMessage('');
+    }
   };
-
-  
-  
 
   return (
     <div className="RegistryPage">
@@ -71,7 +88,7 @@ function App() {
         <form onSubmit={handleSubmit}>
           <div className="mb-1">
             <label htmlFor="country" className="text-field__label"></label>
-            <select name="country" id="country" className="text-field__input" onChange={handleCountryChange} value={selectedCountry.code}>
+            <select name="country" id="country" className="text-field__input" onChange={handleCountryChange} value={selectedCountryCode}>
               {countries.map(country => (
                 <option key={country.code} value={country.code}>{country.name}</option>
               ))}

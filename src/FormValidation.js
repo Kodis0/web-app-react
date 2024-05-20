@@ -11,10 +11,10 @@ export const validateForm = (country, phoneNumber, password) => {
     if (!phoneNumber) {
       errors.push("Phone number is required.");
     } 
-    else if (phoneNumber.length !== 11) {
+    else if (phoneNumber.length > 11) {
       errors.push("Phone number must be at least 11 characters long.");
     }
-    
+
     //Проверка пароля 
     if (!password) {
       errors.push("Password is required.");

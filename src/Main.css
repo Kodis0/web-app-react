@@ -1,0 +1,9 @@
+/* MainPage.css */
+.main-page {
+    display: flex;
+  }
+  
+  .main-content {
+    flex-grow: 1;
+    padding: 20px;
+  }

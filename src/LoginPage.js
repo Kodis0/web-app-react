@@ -2,18 +2,20 @@ import React, { useState } from 'react';
 import logo from './logo.svg';
 import './App.css';
 import { useNavigate } from 'react-router-dom';
+import { useAuth } from './Private/AuthContext';
 
 function LoginPage() {
   const [errorMessage, setErrorMessage] = useState('');
-  const [phoneNumber, setPhoneNumber] = useState('');
+  const [phoneNumber, setPhoneNumber] = useState('+');
   const [password, setPassword] = useState('');
-  
+
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   const handlePhoneNumberChange = (event) => {
-    // Проверяем, чтобы номер телефона начинался с "+", если нет - добавляем его
-    if (!phoneNumber.startsWith('+')) {
-      setPhoneNumber('+' + event.target.value);
+    // Проверяем, чтобы номер телефона начинался с "+"
+    if (!event.target.value.startsWith('+')) {
+      setPhoneNumber('+' + event.target.value.replace(/^\+/, ''));
     } else {
       setPhoneNumber(event.target.value);
     }
@@ -39,6 +41,7 @@ function LoginPage() {
       });
 
       if (response.ok) {
+        login({ phoneNumber });
         navigate('/main');
       } else {
         const responseData = await response.json();
@@ -57,13 +60,12 @@ function LoginPage() {
           <h1>Login</h1>
         </div>
         <div className='Confirm'>
-          <text className='ConfirmText'>Please enter your phone number and password.</text>
+          <span className='ConfirmText'>Please enter your phone number and password.</span>
         </div>
         {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
         <form onSubmit={handleSubmit}>
           <div className="mb-2">
             <label htmlFor="phoneNumber" className="text-field__label"></label>
-            {/* Добавляем атрибут readOnly чтобы предотвратить стирание */}
             <input type="tel" className="text-field__input" name="phoneNumber" placeholder="Your phone number" id="phoneNumber" value={phoneNumber} onChange={handlePhoneNumberChange} />
           </div>
           <div className="mb-2">

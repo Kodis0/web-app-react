@@ -1,18 +1,23 @@
 import React from 'react';
-import { BrowserRouter as Router, Route, Routes } from 'react-router-dom';
-import App from './App';
-import AnotherPage from './LoginPage';
-import MainPage from './main'; // Предположим, что у вас есть компонент для главной страницы
+import { BrowserRouter as Router, Route, Routes, Navigate } from 'react-router-dom';
+import App from './App'; // Страница регистрации
+import LoginPage from './LoginPage'; // Страница логирования
+import MainPage from './main'; // Главная страница
+import PrivateRoute from './Private/PrivateRoute'; // Приватный маршрут
+import { AuthProvider } from './Private/AuthContext'; // Контекст аутентификации
 
 function AppRouter() {
   return (
-    <Router>
-      <Routes>
-        <Route path="/" element={<App />} />
-        <Route path="/another-page" element={<AnotherPage />} />
-        <Route path="/main" element={<MainPage />} /> {/* Используйте ваш компонент для главной страницы здесь */}
-      </Routes>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <Routes>
+          <Route path="/" element={<Navigate to="/registry" />} />
+          <Route path="/registry" element={<App />} />
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/main" element={<PrivateRoute><MainPage /></PrivateRoute>} />
+        </Routes>
+      </Router>
+    </AuthProvider>
   );
 }
 

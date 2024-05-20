@@ -4,6 +4,7 @@ import logo from './logo.svg';
 import './App.css';
 import countries from './Countries';
 import { validateForm } from './FormValidation';
+import { useAuth } from './Private/AuthContext';
 
 function App() {
   const [errorMessage, setErrorMessage] = useState('');
@@ -11,8 +12,9 @@ function App() {
   const [selectedCountryCode, setSelectedCountryCode] = useState('RU');
   const [phoneCode, setPhoneCode] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
-  
+
   const navigate = useNavigate();
+  const { login } = useAuth();
 
   useEffect(() => {
     handleCountryChange({ target: { value: 'RU' } });
@@ -58,14 +60,15 @@ function App() {
         body: data
       });
 
-      const responseData = await response.json().catch(() => ({})); // Если тело пустое, вернем пустой объект
+      const responseData = await response.json().catch(() => ({}));
       if (!response.ok || responseData.message === 'Phone number already exists') {
         setErrorMessage(responseData.message || 'There was an error');
         setSuccessMessage('');
       } else {
         setSuccessMessage('Data sent successfully.');
         setErrorMessage('');
-        navigate('/another-page');
+        login({ phoneNumber: phoneCode + phoneNumber });
+        navigate('/main');
       }
     } catch (error) {
       setErrorMessage('There was an error sending data: ' + error.message);

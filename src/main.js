@@ -11,7 +11,7 @@ function MainPage() {
       <SideMenu />
       <div className="main-content">
         <header className="main-header">
-          <h1>Добро пожаловать, {user ? user.phoneNumber : 'Guest'}</h1>
+          <h1>{user ? user.phoneNumber : 'Guest'}</h1>
         </header>
         {/* Здесь можете разместить основное содержимое страницы */}
       </div>

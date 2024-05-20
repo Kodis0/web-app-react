@@ -16,6 +16,8 @@
   }
   
   .side-menu ul li a {
+    font-size: 25px;
+    padding-left: 60px;
     text-decoration: none;
     color: #ffffff;
     font-weight: bold;

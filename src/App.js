@@ -34,7 +34,6 @@ function App() {
     if (value.startsWith(phoneCode)) {
       setPhoneNumber(value.substring(phoneCode.length));
     } else {
-      setPhoneNumber(value);
     }
   };
 

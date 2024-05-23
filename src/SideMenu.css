@@ -1,69 +1,50 @@
-/* Стили для узкой полоски с кнопкой меню */
-.menu-bar {
-  width: 50px;
-  height: 100%;
-  background-color: #333;
+/* SideMenu.css */
+.side-menu {
   position: fixed;
   top: 0;
   left: 0;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  z-index: 1001; /* Чтобы кнопка была поверх основного контента */
-}
-
-.menu-bar button {
-  background: none;
-  border: none;
-  color: white;
-  font-size: 24px;
-  cursor: pointer;
-}
-
-/* Стили для выезжающего меню */
-.side-menu {
-  width: 350px;
+  width: 250px;
   height: 100%;
-  background-color: rgb(56, 56, 56);
-  position: fixed;
-  top: 0;
-  left: -350px; /* Начальное состояние меню - скрыто */
-  transition: left 0.3s ease-out;
-  box-shadow: 2px 0 5px rgba(0, 0, 0, 0.2);
-  z-index: 1002; /* Чтобы меню было поверх полоски */
+  background-color: #333;
+  color: white;
+  transition: transform 0.3s ease;
+  transform: translateX(-100%);
+  z-index: 1002;
 }
 
 .side-menu.open {
-  left: 0; /* Меню открыто */
+  transform: translateX(0);
 }
 
-.menu-item {
-  color: white;
-  padding: 15px 20px;
-  cursor: pointer;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-  transition: background-color 0.2s;
-}
-
-.menu-item:hover {
-  background-color: rgba(255, 255, 255, 0.1);
-}
-
-.menu-header {
-  color: white;
-  padding: 15px 20px;
-  font-size: 1.2em;
-  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-}
-
-/* Стили для кнопки закрытия меню */
 .menu-close-button {
   background: none;
   border: none;
   color: white;
   font-size: 24px;
   cursor: pointer;
+  padding: 10px;
   position: absolute;
   top: 10px;
   right: 10px;
+}
+
+.menu-header {
+  padding: 20px;
+  font-size: 24px;
+  border-bottom: 1px solid #444;
+}
+
+.menu-item {
+  padding: 15px 20px;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+}
+
+.menu-item:hover {
+  background-color: #444;
+}
+
+.menu-item IonIcon {
+  margin-right: 8px;
 }

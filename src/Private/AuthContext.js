@@ -11,6 +11,8 @@ export const AuthProvider = ({ children }) => {
 
   const logout = () => {
     setUser(null);
+    // Очищаем данные сеанса, например, токены или другие данные аутентификации
+    localStorage.removeItem('authToken'); // Пример удаления токена из localStorage
   };
 
   return (

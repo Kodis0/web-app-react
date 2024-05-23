@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import SideMenu from './SideMenu';
 import './Main.css';
 import { useAuth } from './Private/AuthContext';
+import { IonIcon } from '@ionic/react';
+import { menuOutline, closeOutline } from 'ionicons/icons';
 
 function MainPage() {
   const { user } = useAuth();
@@ -11,14 +13,17 @@ function MainPage() {
     setMenuOpen(!isMenuOpen);
   };
 
+  const closeMenu = () => {
+    setMenuOpen(false);
+  };
+
   return (
     <div className="main-page">
-      <SideMenu isOpen={isMenuOpen} />
+      <SideMenu isOpen={isMenuOpen} onClose={closeMenu} />
 
-      <script nomodule src="https://unpkg.com/ionicons@7.1.0/dist/ionicons/ionicons.js"></script>
       <div className="CloseButton">
         <button className="SwipeMenuClose" onClick={toggleMenu}>
-          <ion-icon name={isMenuOpen ? "close-outline" : "menu-outline"}></ion-icon>
+          <IonIcon icon={isMenuOpen ? closeOutline : menuOutline} />
         </button>
       </div>
 
@@ -26,6 +31,7 @@ function MainPage() {
         <header className="main-header">
           <h1>{user ? user.phoneNumber : 'Guest'}</h1>
         </header>
+        {/* Основной контент страницы */}
       </div>
     </div>
   );

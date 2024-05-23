@@ -12,6 +12,7 @@ function App() {
   const [selectedCountryCode, setSelectedCountryCode] = useState('RU');
   const [phoneCode, setPhoneCode] = useState('');
   const [phoneNumber, setPhoneNumber] = useState('');
+  const [password, setPassword] = useState('');
 
   const navigate = useNavigate();
   const { login } = useAuth();
@@ -34,14 +35,19 @@ function App() {
     if (value.startsWith(phoneCode)) {
       setPhoneNumber(value.substring(phoneCode.length));
     } else {
+      setPhoneNumber(value);
     }
+  };
+
+  const handlePasswordChange = (event) => {
+    setPassword(event.target.value);
   };
 
   const handleSubmit = async (event) => {
     event.preventDefault();
 
     const selectedCountry = countries.find(country => country.code === selectedCountryCode);
-    const errors = validateForm(selectedCountry, phoneNumber, event.target.password.value);
+    const errors = validateForm(selectedCountry, phoneNumber, password);
     if (errors.length > 0) {
       setErrorMessage(errors.join(' '));
       setSuccessMessage('');
@@ -51,7 +57,7 @@ function App() {
     const data = new URLSearchParams();
     data.append('country', selectedCountryCode);
     data.append('phoneNumber', phoneCode + phoneNumber);
-    data.append('password', event.target.password.value);
+    data.append('password', password);
 
     try {
       const response = await fetch('https://localhost:7270/api/your-endpoint', {
@@ -83,7 +89,7 @@ function App() {
           <h1>Monogram</h1>
         </div>
         <div className='Confirm'>
-          <text className='ConfirmText'>Please select your country code and enter your phone number.</text>
+          <span className='ConfirmText'>Please select your country code and enter your phone number.</span>
         </div>
         {errorMessage && <div style={{ color: 'red' }}>{errorMessage}</div>}
         {successMessage && <div style={{ color: 'green' }}>{successMessage}</div>}
@@ -102,7 +108,7 @@ function App() {
           </div>
           <div className="mb-2">
             <label htmlFor="password" className="text-field__label"></label>
-            <input type="password" className="text-field__input" name="password" placeholder="Your password" id="password" />
+            <input type="password" className="text-field__input" name="password" placeholder="Your password" id="password" value={password} onChange={handlePasswordChange} />
           </div>
           <div className='SubmitButton'>
             <button type="submit" className="btn-primary">Submit</button>

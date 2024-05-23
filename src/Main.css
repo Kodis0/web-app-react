@@ -1,10 +1,24 @@
-/* MainPage.css */
 .main-page {
-    display: flex;
-  }
-  
-  .main-content {
-    color: white;
-    flex-grow: 1;
-    padding: 20px;
-  }
+  position: relative;
+  display: flex;
+  height: 100vh;
+}
+
+.main-content {
+  flex-grow: 1;
+  background-color: #f0f0f0;
+  padding: 20px;
+  margin-left: 50px; /* Отступ для учета ширины узкой полоски */
+}
+
+.main-header {
+  background-color: #fff;
+  padding: 10px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.CloseButton {
+  position: absolute;
+  top: 10px;
+  left: 10px
+}

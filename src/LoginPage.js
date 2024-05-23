@@ -13,7 +13,6 @@ function LoginPage() {
   const { login } = useAuth();
 
   const handlePhoneNumberChange = (event) => {
-    // Проверяем, чтобы номер телефона начинался с "+"
     if (!event.target.value.startsWith('+')) {
       setPhoneNumber('+' + event.target.value.replace(/^\+/, ''));
     } else {

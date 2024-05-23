@@ -151,12 +151,24 @@ select:focus {
   box-shadow: 0 0 5px rgb(101, 73, 212);
 }
 
-/* Animation styles */
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+/* Стили для кнопки login */
+.LoginButton {
+  display: block;
+  text-align: center;
+  margin-top: 10px;
+}
+
+.LoginButton .btn-secondary {
+  padding: 5px 10px;
+  font-size: 0.875rem;
+  color: #aaaaaa;
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+  transition: color 0.15s ease-in-out;
+}
+
+.LoginButton .btn-secondary:hover,
+.LoginButton .btn-secondary:focus {
+  color: #888888;
 }

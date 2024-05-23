@@ -34,8 +34,6 @@ function App() {
     const { value } = event.target;
     if (value.startsWith(phoneCode)) {
       setPhoneNumber(value.substring(phoneCode.length));
-    } else {
-      setPhoneNumber(value);
     }
   };
 
@@ -81,6 +79,10 @@ function App() {
     }
   };
 
+  const handleLoginClick = () => {
+    navigate('/login');
+  };
+
   return (
     <div className="RegistryPage">
       <header className="RegistryPage-header">
@@ -114,6 +116,9 @@ function App() {
             <button type="submit" className="btn-primary">Submit</button>
           </div>
         </form>
+        <div className='LoginButton'>
+          <button onClick={handleLoginClick} className="btn-secondary">Login</button>
+        </div>
       </header>
     </div>
   );

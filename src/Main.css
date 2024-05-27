@@ -3,61 +3,52 @@
   position: relative;
   display: flex;
   height: 100vh;
-  background-color: #e5e5e5; /* Светлый фон, похожий на Telegram */
 }
 
-.main-content {
-  flex-grow: 1;
-  background-color: #ffffff; /* Белый фон для основного контента */
-  padding: 20px;
-  margin-left: 50px; /* Отступ для учета ширины узкой полоски */
-  display: flex;
-  flex-direction: column;
+/* Светлая тема */
+.light-theme .main-page {
+  background-color: #e5e5e5;
 }
 
-.main-header {
+.light-theme .main-content {
   background-color: #ffffff;
-  padding: 10px 20px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-}
-
-.main-header h1 {
-  font-size: 1.5rem;
-  margin: 0;
   color: #333;
 }
 
-.CloseButton {
-  position: absolute;
-  top: 10px;
-  left: 10px;
-  z-index: 1001;
-}
-
-.SwipeMenuClose {
-  background: none;
-  border: none;
+.light-theme .main-header {
+  background-color: #ffffff;
   color: #333;
-  font-size: 24px;
-  cursor: pointer;
 }
 
-.menu-icon {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  width: 50px;
-  height: 50px;
-  background-color: #0088cc; /* Цвет кнопки меню, как в Telegram */
+.light-theme .menu-icon {
+  background-color: #0088cc;
   color: #ffffff;
-  border-radius: 50%;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-  cursor: pointer;
 }
 
-.menu-icon:hover {
-  background-color: #007bb5; /* Цвет кнопки при наведении */
+.light-theme .menu-icon:hover {
+  background-color: #007bb5;
+}
+
+/* Тёмная тема */
+.dark-theme .main-page {
+  background-color: #333333;
+}
+
+.dark-theme .main-content {
+  background-color: #444444;
+  color: #ffffff;
+}
+
+.dark-theme .main-header {
+  background-color: #444444;
+  color: #ffffff;
+}
+
+.dark-theme .menu-icon {
+  background-color: #666666;
+  color: #ffffff;
+}
+
+.dark-theme .menu-icon:hover {
+  background-color: #555555;
 }

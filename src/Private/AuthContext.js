@@ -7,11 +7,13 @@ export const AuthProvider = ({ children }) => {
 
   const login = (userData) => {
     setUser(userData);
+    localStorage.setItem('phoneNumber', userData.phoneNumber); // Сохраняем номер телефона в localStorage
   };
 
   const logout = () => {
     setUser(null);
-    // Очищаем данные сеанса, например, токены или другие данные аутентификации
+    localStorage.removeItem('phoneNumber'); // Удаляем номер телефона из localStorage при выходе из системы
+    // Очищаем другие данные сеанса, например, токены или другие данные аутентификации
     localStorage.removeItem('authToken'); // Пример удаления токена из localStorage
   };
 

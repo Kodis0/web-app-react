@@ -1,64 +1,73 @@
 import React, { useState, useEffect } from 'react';
 import './ProfileModal.css';
 
-function ProfileModal({ isOpen, onClose, user, onSave }) {
+function ProfileModal({ isOpen, onClose, userPhoneNumber, onSave }) {
   const [formData, setFormData] = useState({
     name: '',
     username: '',
     dateOfBirth: '',
     status: '',
-    quote: ''
+    phoneNumber: userPhoneNumber || ''
   });
 
   useEffect(() => {
-    if (user) {
-      fetch(`https://localhost:7270/api/UserProfile/${user.phoneNumber}`)
-        .then(response => response.json())
+    if (userPhoneNumber) {
+      fetch(`https://localhost:7270/api/UserProfile/${userPhoneNumber}`)
+        .then(response => {
+          if (!response.ok) {
+            throw new Error('Profile not found');
+          }
+          return response.json();
+        })
         .then(data => {
           setFormData({
             name: data.name || '',
             username: data.username || '',
             dateOfBirth: data.dateOfBirth ? data.dateOfBirth.split('T')[0] : '',
             status: data.status || '',
-            quote: data.quote || ''
+            phoneNumber: data.phoneNumber || userPhoneNumber
           });
         })
         .catch(error => console.error('Error fetching user profile:', error));
     }
-  }, [user]);
-
-  if (!isOpen) return null;
+  }, [userPhoneNumber]);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData((prevData) => ({
+    setFormData(prevData => ({
       ...prevData,
       [name]: value
     }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
   
-    const formData = new FormData();
-    formData.append('name', formData.name);
-    formData.append('username', formData.username);
-    formData.append('dateOfBirth', formData.dateOfBirth);
-    formData.append('status', formData.status);
-    formData.append('quote', formData.quote);
-    formData.append('phoneNumber', user.phoneNumber); // Передача номера телефона пользователя
+    try {
+      const response = await fetch('https://localhost:7270/api/UserProfile', {
+        method: 'PUT',  // Изменено с 'POST' на 'PUT'
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({
+          ...formData,
+          dateOfBirth: new Date(formData.dateOfBirth + 'T00:00:00Z').toISOString()
+        }),
+      });
   
-    fetch('https://localhost:7270/api/UserProfile', {
-      method: 'POST',
-      body: formData
-    })
-      .then(response => response.json())
-      .then(data => {
-        onSave(formData);
-        onClose();
-      })
-      .catch(error => console.error('Error saving profile:', error));
+      if (!response.ok) {
+        throw new Error('Failed to save profile');
+      }
+  
+      const data = await response.json();
+      onSave(formData);
+      onClose();
+    } catch (error) {
+      console.error('Error saving profile:', error);
+    }
   };
+
+  if (!isOpen) return null;
 
   return (
     <div className="modal-overlay" onClick={onClose}>
@@ -69,7 +78,17 @@ function ProfileModal({ isOpen, onClose, user, onSave }) {
         <h2>Профиль</h2>
         <form onSubmit={handleSubmit} className="profile-form">
           <div className="form-group">
-            <label htmlFor="status"></label>
+            <label htmlFor="phoneNumber">Номер телефона:</label>
+            <input
+              type="text"
+              id="phoneNumber"
+              name="phoneNumber"
+              value={formData.phoneNumber}
+              onChange={handleChange}
+            />
+          </div>
+          <div className="form-group">
+            <label htmlFor="status">Статус:</label>
             <input
               type="text"
               id="status"
@@ -79,7 +98,7 @@ function ProfileModal({ isOpen, onClose, user, onSave }) {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="name">Name:</label>
+            <label htmlFor="name">Имя:</label>
             <input
               type="text"
               id="name"
@@ -89,7 +108,7 @@ function ProfileModal({ isOpen, onClose, user, onSave }) {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="username">@Username:</label>
+            <label htmlFor="username">@Имя пользователя:</label>
             <input
               type="text"
               id="username"
@@ -99,22 +118,12 @@ function ProfileModal({ isOpen, onClose, user, onSave }) {
             />
           </div>
           <div className="form-group">
-            <label htmlFor="dateOfBirth">Date of Birth:</label>
+            <label htmlFor="dateOfBirth">Дата рождения:</label>
             <input
               type="date"
               id="dateOfBirth"
               name="dateOfBirth"
               value={formData.dateOfBirth}
-              onChange={handleChange}
-            />
-          </div>
-          <div className="form-group">
-            <label htmlFor="quote">Quote:</label>
-            <textarea
-              id="quote"
-              name="quote"
-              maxLength="140"
-              value={formData.quote}
               onChange={handleChange}
             />
           </div>

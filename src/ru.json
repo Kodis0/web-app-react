@@ -1,0 +1,19 @@
+{
+    "menu": {
+      "settings": "Настройки",
+      "profile": "Профиль",
+      "logout": "Выход"
+    },
+    "settings": {
+      "language": "Язык"
+    },
+    "profile": {
+      "avatar": "Аватар",
+      "phoneNumber": "Номер телефона",
+      "status": "Статус",
+      "name": "Имя",
+      "username": "Имя пользователя",
+      "dateOfBirth": "Дата рождения",
+      "save": "Сохранить"
+    }
+  }

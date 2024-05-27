@@ -1,0 +1,19 @@
+{
+    "menu": {
+      "settings": "Settings",
+      "profile": "Profile",
+      "logout": "Logout"
+    },
+    "settings": {
+      "language": "Language"
+    },
+    "profile": {
+      "avatar": "Avatar",
+      "phoneNumber": "Phone Number",
+      "status": "Status",
+      "name": "Name",
+      "username": "Username",
+      "dateOfBirth": "Date of Birth",
+      "save": "Save"
+    }
+  }
